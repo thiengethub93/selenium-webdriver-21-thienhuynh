@@ -23,74 +23,84 @@ public class Topic_02_Xpath
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
-		driver.get("https://demo.nopcommerce.com/register?returnUrl=%2F");
+		driver.get("http://live.demoguru99.com/");
 	}
 
 	@Test //  chi duong chay cho TESTNG "@Test"la nhung test case auto TESTNG phai chay
-	public void TC_01_ID() 
+	public void TC_01_EmptyEmail() 
 	{
-		driver.findElement(By.id("FirstName")).sendKeys("automation");
-		//Click on mail radio button
-		driver.findElement(By.id("gender-male")).sendKeys("Male");
+		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("");
+		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("");
+		driver.findElement(By.xpath("//button[@title='Login']")).click();
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-required-entry-email']")).getText(),"This is a required field.");
+		//Assert.assertEqual: Là lệnh dùng cho Verify messsage
+		//Assert: Lưu Xpath
+		//assertEqual: Lưu text message. 
 		SleepInSecond(3);
-		
+
 	}
 
 	@Test
-	public void TC_02_Class() 
+	public void TC_02_InvalidEmail() 
 	{
-		//refresh page
-		driver.navigate().refresh();
-		driver.findElement(By.className("search-box-text")).sendKeys("Macbook");
+		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("email@123.123.123.123");
+		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@title='Login']")).click();
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-validate-email-email']")).getText(),"Please enter a valid email address. For example johndoe@domain.com.");
 		SleepInSecond(3);
-        driver.findElement(By.className("search-box-button")).click();	
-        SleepInSecond(3);
 	}
 
 	@Test
-	public void TC_03_Name() 
+	public void TC_03_IncorrectPassword() 
 	{
-		driver.get("https://demo.nopcommerce.com/register?returnUrl=%2F");
-		driver.findElement(By.name("Email" )).sendKeys("autotest@gmail.com");
-		SleepInSecond(3);
-		driver.findElement(By.name("Newsletter")).click();
-		SleepInSecond(3);
+		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("ryanhuynh123@mailinator.com");
+		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123");
+		driver.findElement(By.xpath("//button[@title='Login']")).click();
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-validate-password-pass']")).getText(),"Please enter 6 or more characters without leading or trailing spaces.");
 		
 	}
 	@Test
-	public void TC_04_TagName() 
+	public void TC_04_InvalidLogin() 
 	{
-		System.out.println("sum link" + driver.findElement(By.tagName("a")).getSize());
-		SleepInSecond(3);
+		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("automation@gmail.com");
+		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123123123");
+		driver.findElement(By.xpath("//button[@title='Login']")).click();
+		Assert.assertEquals(driver.findElement(By.xpath("//li[@class='error-msg']//span")).getText(),"Invalid login or password.");
 		
 	}
 	@Test
-	public void TC_05_LinkTest() 
+	public void TC_05_AccountCreation() 
 	{
-		driver.findElement(By.linkText("Log in")).click();
-		SleepInSecond(3);
-		
+		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
+		driver.findElement(By.xpath("//input[@id='firstname']")).sendKeys("Thien");
+		driver.findElement(By.xpath("//input[@id='lastname']")).sendKeys("Ryan");
+		driver.findElement(By.xpath("//input[@id='email_address']")).sendKeys("thienryan123@mailinator.com");
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys("123456789");
+		driver.findElement(By.xpath("//input[@id='confirmation']")).sendKeys("123456789");
+		driver.findElement(By.xpath("//input[@class='checkbox']")).click();
+		driver.findElement(By.xpath("//button[@title='Register']")).click();
+		Assert.assertEquals(driver.findElement(By.xpath("//li[@class='success-msg']//span")).getText(),"Thank you for registering with Main Website Store.");
 	}
 	@Test 
 	public void TC_06_Partial_LinkTest() 
 	{
-		driver.findElement(By.partialLinkText("Recently viewed")).click();
-		SleepInSecond(3);
+		
 	}
 	@Test
 	public void TC_08_Xpath() 
 	{
-		driver.findElement(By.xpath("//input[@id='FirstName']")).sendKeys("First Name");
-		SleepInSecond(3);
-		driver.findElement(By.xpath("//input[@id='Email']")).sendKeys("newone123@mailinator.com");
-		SleepInSecond(3);
+		
 		
 	}
 	@Test
 	public void TC_07_Css() 
 	{
-		driver.findElement(By.cssSelector("input[class=search-box-text ui-autocomplete-input']")).sendKeys("Macbook");
-		SleepInSecond(3);
+		
 	}
 	@Test
 
