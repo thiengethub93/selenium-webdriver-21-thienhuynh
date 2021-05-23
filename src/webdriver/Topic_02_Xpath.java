@@ -86,23 +86,23 @@ public class Topic_02_Xpath
 		driver.findElement(By.xpath("//button[@title='Register']")).click();
 		Assert.assertEquals(driver.findElement(By.xpath("//li[@class='success-msg']//span")).getText(),"Thank you for registering with Main Website Store.");
 	}
-	@Test 
-	public void TC_06_Partial_LinkTest() 
+	//@Test 
+	//public void TC_06_Partial_LinkTest() 
 	{
 		
 	}
-	@Test
-	public void TC_08_Xpath() 
+	//@Test
+	//public void TC_08_Xpath() 
 	{
 		
 		
 	}
-	@Test
-	public void TC_07_Css() 
+	//@Test
+	//public void TC_07_Css() 
 	{
 		
 	}
-	@Test
+	//@Test
 
 	@AfterClass
 	public void afterClass() {
